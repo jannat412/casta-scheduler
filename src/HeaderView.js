@@ -21,6 +21,7 @@ class HeaderView extends Component {
         let minuteStepsInHour = schedulerData.getMinuteStepsInHour();
 
         let headerList = [];
+        let pFormattedList = [];
         let style = {};
         if(cellUnit === CellUnits.Hour){
             headers.forEach((item, index) => {
@@ -64,10 +65,18 @@ class HeaderView extends Component {
                 if(index === headers.length - 1)
                     style = !!item.nonWorkingTime ? {color: config.nonWorkingTimeHeadColor, backgroundColor: config.nonWorkingTimeHeadBgColor} : {};
 
-                let pFormattedList = config.nonAgendaOtherCellHeaderFormat.split('|').map(item => datetime.format(item));
+                let year = datetime.format('YYYY');
+                let month = datetime.format('M');
+                let first = new Date(year, month - 1, 1);
+                let isCurrent = datetime.isSame(first, 'day');
+                if (isCurrent) {
+                    pFormattedList = 'MMM|D / ddd'.split('|').map(item => datetime.format(item));
+                } else {
+                    pFormattedList = config.nonAgendaOtherCellHeaderFormat.split('|').map(item => datetime.format(item));
+                }
 
                 if (typeof nonAgendaCellHeaderTemplateResolver === 'function') {
-                    return nonAgendaCellHeaderTemplateResolver(schedulerData, item, pFormattedList, style)
+                    return nonAgendaCellHeaderTemplateResolver(schedulerData, item, pFormattedList, style, isCurrent)
                 }
 
                 const pList = pFormattedList.map((item, index) => (

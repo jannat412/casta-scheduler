@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {PropTypes} from 'prop-types'
-// Col, Row and Icon do not have their own less files for styling. They use 
+// Col, Row and Icon do not have their own less files for styling. They use
 // rules declared in antd's global css. If these styles are imported directly
 // from within antd, they'll include, for instance, reset rules. These will
 // affect everything on the page and in essence would leak antd's global styles
@@ -13,7 +13,7 @@ import {PropTypes} from 'prop-types'
 // https://github.com/ant-design/ant-design/issues/4331
 // The solution is based on:
 // https://github.com/ant-design/ant-design/issues/4331#issuecomment-391066131
-// 
+//
 // For development
 // This fix is implemented with webpack's NormalModuleReplacementPlugin in
 // webpack/webpack-dev.config.js.
@@ -207,11 +207,11 @@ class Scheduler extends Component {
             if (config.schedulerMaxHeight > 0) {
                 schedulerContentStyle = {
                     ...schedulerContentStyle,
-                    maxHeight: config.schedulerMaxHeight - config.tableHeaderHeight
+                    maxHeight: config.schedulerMaxHeight - config.tableHeaderHeight, height : config.schedulerMaxHeight - config.tableHeaderHeight
                 };
                 resourceContentStyle = {
                     ...resourceContentStyle,
-                    maxHeight: config.schedulerMaxHeight - config.tableHeaderHeight
+                    maxHeight: config.schedulerMaxHeight - config.tableHeaderHeight, height : config.schedulerMaxHeight - config.tableHeaderHeight
                 };
             }
 
@@ -242,8 +242,8 @@ class Scheduler extends Component {
                         </div>
                     </td>
                     <td>
-                        <div className="scheduler-view" style={{width: schedulerContainerWidth, verticalAlign: 'top'}}>
-                            <div style={{overflow: "hidden", borderBottom: "1px solid #e9e9e9", height: config.tableHeaderHeight}}>
+                        <div className="scheduler-view" style={{width: schedulerContainerWidth+20, verticalAlign: 'top'}}>
+                            <div style={{overflow: "hidden", borderBottom: "3px solid #e9e9e9", height: config.tableHeaderHeight}}>
                                 <div style={{overflowX: "scroll", overflowY: "hidden", margin: `0px 0px -${contentScrollbarHeight}px`}} ref={this.schedulerHeadRef} onMouseOver={this.onSchedulerHeadMouseOver} onMouseOut={this.onSchedulerHeadMouseOut} onScroll={this.onSchedulerHeadScroll}>
                                     <div style={{paddingRight: `${contentScrollbarWidth}px`, width: schedulerWidth + contentScrollbarWidth}}>
                                         <table className="scheduler-bg-table">
@@ -253,6 +253,7 @@ class Scheduler extends Component {
                                 </div>
                             </div>
                             <div style={schedulerContentStyle} ref={this.schedulerContentRef} onMouseOver={this.onSchedulerContentMouseOver} onMouseOut={this.onSchedulerContentMouseOut} onScroll={this.onSchedulerContentScroll} >
+                                <div style={{width: schedulerWidth, height: "15px", backgroundColor: "#ffffff"}}/>
                                 <div style={{width: schedulerWidth, height: contentHeight}}>
                                     <div className="scheduler-content">
                                         <table className="scheduler-content-table" >
@@ -326,8 +327,8 @@ class Scheduler extends Component {
 
     resolveScrollbarSize = () => {
         const { schedulerData } = this.props;
-        let contentScrollbarHeight = 17, 
-            contentScrollbarWidth = 17, 
+        let contentScrollbarHeight = 17,
+            contentScrollbarWidth = 17,
             resourceScrollbarHeight = 17,
             resourceScrollbarWidth = 17,
             contentHeight = schedulerData.getSchedulerContentDesiredHeight();

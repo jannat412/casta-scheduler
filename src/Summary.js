@@ -31,7 +31,7 @@ class Summary extends Component {
             style = {...style, fontSize: summary.fontSize};
 
         return (
-            <a className="timeline-event header2-text" style={{left: left, width: width, top: top, cursor: 'default'}} >
+            <a className="timeline-event header2-text" style={{left: left, width: width, top: top +9, cursor: 'default'}} >
                 <div style={style}>
                     {summary.text}
                 </div>
