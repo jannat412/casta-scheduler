@@ -1,6 +1,6 @@
 {
   "name": "casta-scheduler",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A scheduler and resource planning component built for React and made for modern browsers (IE10+)",
   "keywords": [
     "scheduler",

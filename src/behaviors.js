@@ -10,9 +10,9 @@ export const getCustomDate = (schedulerData, num, date = undefined) => {
     const {viewType} = schedulerData;
     let selectDate = schedulerData.startDate;
     if(date != undefined)
-        selectDate = date;    
-    
-    let startDate = num === 0 ? selectDate : 
+        selectDate = date;
+
+    let startDate = num === 0 ? selectDate :
         schedulerData.localeMoment(selectDate).add(2*num, 'days').format(DATE_FORMAT),
         endDate = schedulerData.localeMoment(startDate).add(1, 'days').format(DATE_FORMAT),
         cellUnit = CellUnits.Hour;
@@ -27,7 +27,7 @@ export const getCustomDate = (schedulerData, num, date = undefined) => {
         endDate = schedulerData.localeMoment(startDate).add(1, 'months').endOf('month').format(DATE_FORMAT);
         cellUnit = CellUnits.Day;
     }
-        
+
     return {
         startDate,
         endDate,
@@ -113,7 +113,7 @@ export default {
     //getCustomDateFunc: getCustomDate,
     getCustomDateFunc: undefined,
     // getNonAgendaViewBodyCellBgColorFunc: getNonAgendaViewBodyCellBgColor,
-    getNonAgendaViewBodyCellBgColorFunc: undefined, 
+    getNonAgendaViewBodyCellBgColorFunc: undefined,
     getScrollSpecialMomentFunc: getScrollSpecialMoment,
     getDateLabelFunc: getDateLabel,
     getEventTextFunc: getEventText,
