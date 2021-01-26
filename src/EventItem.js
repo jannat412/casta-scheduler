@@ -143,7 +143,18 @@ class EventItem extends Component {
         }
         document.onselectstart = null;
         document.ondragstart = null;
-        const {width, left, top, leftIndex, rightIndex, schedulerData, eventItem, updateEventStart, conflictOccurred} = this.props;
+        const {
+            width, 
+            left, 
+            top, 
+            leftIndex, 
+            rightIndex, 
+            schedulerData, 
+            eventItem, 
+            updateEventStart, 
+            conflictOccurred
+        } = this.props;
+
         schedulerData._stopResizing();
         if(this.state.width === width) return;
 
@@ -473,7 +484,18 @@ class EventItem extends Component {
     }
 
     render() {
-        const {eventItem, isStart, isEnd, isInPopover, eventItemClick, schedulerData, isDragging, connectDragSource, connectDragPreview, eventItemTemplateResolver} = this.props;
+        const {
+            eventItem, 
+            isStart, 
+            isEnd, 
+            isInPopover, 
+            eventItemClick, 
+            schedulerData, 
+            isDragging, 
+            connectDragSource, 
+            connectDragPreview, 
+            eventItemTemplateResolver
+        } = this.props;
         const {config, localeMoment} = schedulerData;
         const {left, width, top} = this.state;
         let roundCls = isStart ? (isEnd ? 'round-all' : 'round-head') : (isEnd ? 'round-tail' : 'round-none');
@@ -493,24 +515,55 @@ class EventItem extends Component {
         );
 
         let start = localeMoment(eventItem.start);
+        let end = localeMoment(eventItem.end);
+
+        let getDatesBetweenDates = (startDate, endDate) => {
+            let dates = []
+            //to avoid modifying the original date
+            let theDate = new Date(startDate)
+            while (theDate < endDate) {
+                dates = [...dates, new Date(theDate)]
+                theDate.setDate(theDate.getDate() + 1)
+            }
+            return dates
+        }
+
+        let dates = getDatesBetweenDates(start, end);
+
         let eventTitle = isInPopover ? `${start.format('HH:mm')} ${titleText}` : titleText;
+
         let startResizeDiv = <div />;
+
         if (this.startResizable(this.props))
             startResizeDiv = <div className="event-resizer event-start-resizer" ref={(ref) => this.startResizer = ref}></div>;
+
         let endResizeDiv = <div />;
         if (this.endResizable(this.props))
             endResizeDiv = <div className="event-resizer event-end-resizer" ref={(ref) => this.endResizer = ref}></div>;
 
         let eventItemTemplate = (
-            <div className={roundCls + ' event-item'} key={eventItem.id}
-                 style={{height: config.eventItemHeight, backgroundColor: bgColor}}>
-                <span style={{marginLeft: '10px', lineHeight: `${config.eventItemHeight}px` }}>{eventTitle}</span>
+            <div 
+                className={roundCls + ' event-item'} 
+                key={eventItem.id}
+                style={{
+                    height: config.eventItemHeight, 
+                    backgroundColor: bgColor
+                }}
+            >
+                <span 
+                    style={{
+                        marginLeft: '10px', 
+                        lineHeight: `${config.eventItemHeight}px` 
+                    }
+                }>
+                    {eventTitle}
+                </span>
             </div>
         );
         if(eventItemTemplateResolver != undefined)
-            eventItemTemplate = eventItemTemplateResolver(schedulerData, eventItem, bgColor, isStart, isEnd, 'event-item', config.eventItemHeight, undefined);
+            eventItemTemplate = eventItemTemplateResolver(schedulerData, eventItem, dates, width + 4, bgColor, isStart, isEnd, 'event-item', config.eventItemHeight, undefined)
 
-        let a = <a className="timeline-event" style={{left: left, width: width, top: top}} onClick={() => { if(!!eventItemClick) eventItemClick(schedulerData, eventItem);}}>
+        let a = <a className="timeline-event" style={{left: left, width: width + 4, top: top}} onClick={() => { if(!!eventItemClick) eventItemClick(schedulerData, eventItem);}}>
             {eventItemTemplate}
             {startResizeDiv}
             {endResizeDiv}
