@@ -202,7 +202,7 @@ class Scheduler extends Component {
             let resourcePaddingBottom = resourceScrollbarHeight === 0 ? contentScrollbarHeight : 0;
             let contentPaddingBottom = contentScrollbarHeight === 0 ? resourceScrollbarHeight : 0;
             let schedulerContentStyle = {overflow: 'auto', margin: "0px", position: "relative", paddingBottom: contentPaddingBottom};
-            let resourceContentStyle = {overflowX: "auto", overflowY: "auto", width: resourceTableWidth + resourceScrollbarWidth - 2, margin: `0px -${contentScrollbarWidth}px 0px 0px`};
+            let resourceContentStyle = {overflowX: "hidden", overflowY: "hidden", width: resourceTableWidth + resourceScrollbarWidth - 2, margin: `0px -${contentScrollbarWidth}px 0px 0px`};
             if (config.schedulerMaxHeight > 0) {
                 schedulerContentStyle = {
                     ...schedulerContentStyle,
