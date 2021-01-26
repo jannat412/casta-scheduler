@@ -43,20 +43,20 @@ class AgendaResourceEvents extends Component {
                     let isStart = eventStart >= durationStart;
                     let isEnd = eventEnd < durationEnd;
                     let eventItem = <AgendaEventItem
-                                        {...this.props}
-                                        key={evt.eventItem.id}
-                                        eventItem={evt.eventItem}
-                                        isStart={isStart}
-                                        isEnd={isEnd}
-                                    />;
+                        {...this.props}
+                        key={evt.eventItem.id}
+                        eventItem={evt.eventItem}
+                        isStart={isStart}
+                        isEnd={isEnd}
+                    />;
                     events.push(eventItem);
                 });
             }
         });
 
         let a = slotClickedFunc != undefined ? <a onClick={() => {
-            slotClickedFunc(schedulerData, resourceEvents);
-        }}>{resourceEvents.slotName}</a>
+                slotClickedFunc(schedulerData, resourceEvents);
+            }}>{resourceEvents.slotName}</a>
             : <span>{resourceEvents.slotName}</span>;
         let slotItem = (
             <div style={{width: width}} title={resourceEvents.slotName} className="overflow-text header2-text">

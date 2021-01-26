@@ -38,13 +38,13 @@ class AgendaView extends Component {
                 <td>
                     <table className="scheduler-table">
                         <thead>
-                            <tr style={{height: tableHeaderHeight}}>
-                                <th style={{width: agendaResourceTableWidth}} className="header3-text">{resourceName}</th>
-                                <th className="header3-text">{agendaViewHeader}</th>
-                            </tr>
+                        <tr style={{height: tableHeaderHeight}}>
+                            <th style={{width: agendaResourceTableWidth}} className="header3-text">{resourceName}</th>
+                            <th className="header3-text">{agendaViewHeader}</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {resourceEventsList}
+                        {resourceEventsList}
                         </tbody>
                     </table>
                 </td>

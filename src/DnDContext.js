@@ -30,7 +30,7 @@ export default class DnDContext {
                     if(cellUnit !== CellUnits.Hour)
                         initialEndTime = localeMoment(resourceEvents.headerItems[initialLeftIndex].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
                 }
-                const point = monitor.getClientOffset();                
+                const point = monitor.getClientOffset();
                 let leftIndex = Math.floor((point.x - pos.x)/cellWidth);
                 let startTime = resourceEvents.headerItems[leftIndex].start;
                 let endTime = resourceEvents.headerItems[leftIndex].end;
@@ -63,7 +63,7 @@ export default class DnDContext {
                     if(cellUnit !== CellUnits.Hour)
                         initialEnd = localeMoment(resourceEvents.headerItems[initialLeftIndex].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
                 }
-                const point = monitor.getClientOffset();                
+                const point = monitor.getClientOffset();
                 let leftIndex = Math.floor((point.x - pos.x)/cellWidth);
                 if(!resourceEvents.headerItems[leftIndex]) {
                     return;

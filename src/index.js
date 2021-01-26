@@ -166,10 +166,9 @@ class Scheduler extends Component {
 
         let dateLabel = schedulerData.getDateLabel();
         let defaultValue = `${viewType}${showAgenda ? 1 : 0}${isEventPerspective ? 1 : 0}`;
-        let radioButtonList = config.views.map(item => {
-            return <RadioButton key={`${item.viewType}${item.showAgenda ? 1 : 0}${item.isEventPerspective ? 1 : 0}`}
-                                value={`${item.viewType}${item.showAgenda ? 1 : 0}${item.isEventPerspective ? 1 : 0}`}><span
-                style={{margin: "0px 8px"}}>{item.viewName}</span></RadioButton>
+        let optionList = config.views.map(item => {
+            return <option key={`${item.viewType}${item.showAgenda ? 1 : 0}${item.isEventPerspective ? 1 : 0}`}
+                                value={`${item.viewType}${item.showAgenda ? 1 : 0}${item.isEventPerspective ? 1 : 0}`}>{item.viewName}</option>
         })
 
         let tbodyContent = <tr />;
@@ -300,9 +299,14 @@ class Scheduler extends Component {
                         </div>
                     </Col>
                     <Col>
-                        <RadioGroup defaultValue={defaultValue} size="default" onChange={this.onViewChange}>
-                            {radioButtonList}
-                        </RadioGroup>
+                        <div style={{display: 'flex'}}>
+                            <div className="view-change">
+                                View:
+                            </div>
+                            <select className="view-select" style={{color: "blue"}} defaultValue={defaultValue} size="default" onChange={this.onViewChange}>
+                                {optionList}
+                            </select>
+                        </div>
                     </Col>
                     {rightCustomHeader}
                 </Row>

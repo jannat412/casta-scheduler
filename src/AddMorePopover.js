@@ -54,18 +54,18 @@ class AddMorePopover extends Component {
                 let eventItemWidth = 138;
                 let eventItemTop = 12 + i*config.eventItemLineHeight;
                 let eventItem = <DnDEventItem
-                                   {...this.props}
-                                   key={evt.eventItem.id}
-                                   eventItem={evt.eventItem}
-                                   leftIndex={0}
-                                   isInPopover={true}
-                                   isStart={isStart}
-                                   isEnd={isEnd}
-                                   rightIndex={1}
-                                   left={eventItemLeft}
-                                   width={eventItemWidth}
-                                   top={eventItemTop}
-                                   />
+                    {...this.props}
+                    key={evt.eventItem.id}
+                    eventItem={evt.eventItem}
+                    leftIndex={0}
+                    isInPopover={true}
+                    isStart={isStart}
+                    isEnd={isEnd}
+                    rightIndex={1}
+                    left={eventItemLeft}
+                    width={eventItemWidth}
+                    top={eventItemTop}
+                />
                 eventList.push(eventItem);
             }
         });
