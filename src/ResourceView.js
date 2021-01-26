@@ -18,45 +18,60 @@ class ResourceView extends Component {
 
     render() {
 
-        const {schedulerData, contentScrollbarHeight, slotClickedFunc, slotItemTemplateResolver, toggleExpandFunc} = this.props;
+        const {
+            schedulerData, 
+            contentScrollbarHeight, 
+            slotClickedFunc, 
+            slotItemTemplateResolver, 
+            toggleExpandFunc,
+            resourceItem
+        } = this.props;
         const {renderData} = schedulerData;
 
         let width = schedulerData.getResourceTableWidth() - 2;
         let paddingBottom = contentScrollbarHeight;
         let displayRenderData = renderData.filter(o => o.render);
-        let resourceList = displayRenderData.map((item) => {
+        let resourceList = () => {
             let indents = [];
-            for(let i=0;i<item.indent;i++) {
+            for(let i=0;i<resourceItem.indent;i++) {
                 indents.push(<span key={`es${i}`} className="expander-space"></span>);
             }
-            let indent = <span key={`es${item.indent}`} className="expander-space"></span>;
-            if(item.hasChildren) {
-                indent = item.expanded ? (
-                    <Icon type="minus-square" key={`es${item.indent}`} style={{}} className=""
+            let indent = <span key={`es${resourceItem.indent}`} className="expander-space"></span>;
+            if(resourceItem.hasChildren) {
+                indent = resourceItem.expanded ? (
+                    <Icon 
+                        type="minus-square" 
+                        key={`es${resourceItem.indent}`} 
+                        style={{}} 
+                        className=""
                         onClick={() => {
                             if(!!toggleExpandFunc)
-                                toggleExpandFunc(schedulerData, item.slotId);
+                                toggleExpandFunc(schedulerData, resourceItem.slotId);
                         }}/>
                 ) : (
-                    <Icon type="plus-square" key={`es${item.indent}`} style={{}} className=""
-                          onClick={() => {
-                              if (!!toggleExpandFunc)
-                                  toggleExpandFunc(schedulerData, item.slotId);
-                          }}/>
+                    <Icon 
+                        type="plus-square" 
+                        key={`es${resourceItem.indent}`} 
+                        style={{}} 
+                        className=""
+                        onClick={() => {
+                            if (!!toggleExpandFunc)
+                                toggleExpandFunc(schedulerData, resourceItem.slotId);
+                        }}/>
                 );
             }
             indents.push(indent);
 
-            let len = item.slotName.length;
+            let len = resourceItem.slotName.length;
             let idx = 0;
             for (let i = 0; i < len; i++) {
-                if (i >= 0 && i < len && item.slotName[i] === ' ') idx = i;
+                if (i >= 0 && i < len && resourceItem.slotName[i] === ' ') idx = i;
             }
-            let shortName = item.slotName[0] + item.slotName[idx + 1];
+            let shortName = resourceItem.slotName[0] + resourceItem.slotName[idx + 1];
 
             let a = slotClickedFunc != undefined ? <div className="slot-cell">{indents}
                     <div className="slot-div" onClick={() => {
-                        slotClickedFunc(schedulerData, item);
+                        slotClickedFunc(schedulerData, resourceItem);
                     }}>
                         <div className="slot-text-round">
                             <div className="slot-span">
@@ -64,7 +79,7 @@ class ResourceView extends Component {
                             </div>
                         </div>
                         <div className="slot-text">
-                            {item.slotName}
+                            {resourceItem.slotName}
                         </div>
                     </div>
                 </div>
@@ -76,23 +91,33 @@ class ResourceView extends Component {
                             </div>
                         </div>
                         <div className="slot-text">
-                            {item.slotName}
+                            {resourceItem.slotName}
                         </div>
                     </div>
                 </div>;
             let slotItem = (
-                <div title={item.slotName} className="overflow-text header2-text" style={{textAlign: "left"}}>
+                <div 
+                    title={resourceItem.slotName} 
+                    className="overflow-text header2-text" 
+                    style={{textAlign: "left"}}
+                >
                     {a}
                 </div>
             );
             if (!!slotItemTemplateResolver) {
-                let temp = slotItemTemplateResolver(schedulerData, item, slotClickedFunc, width, "overflow-text header2-text");
+                let temp = slotItemTemplateResolver(
+                    schedulerData, 
+                    resourceItem, 
+                    slotClickedFunc, 
+                    width, 
+                    "overflow-text header2-text"
+                );
                 if (!!temp)
                     slotItem = temp;
             }
 
-            let tdStyle = {height: item.rowHeight};
-            if(item.groupOnly) {
+            let tdStyle = {height: resourceItem.rowHeight};
+            if(resourceItem.groupOnly) {
                 tdStyle = {
                     ...tdStyle,
                     backgroundColor: schedulerData.config.groupOnlySlotColor
@@ -100,21 +125,27 @@ class ResourceView extends Component {
             }
 
             return (
-                <tr key={item.slotId}>
-                    <td data-resource-id={item.slotId} style={tdStyle}>
-                        {slotItem}
-                    </td>
-                </tr>
+                // <tr key={resourceItem.slotId}>
+                //     <td data-resource-id={resourceItem.slotId} style={tdStyle}>
+                //         {slotItem}
+                //     </td>
+                // </tr>
+                <td data-resource-id={resourceItem.slotId} style={tdStyle}>
+                    {slotItem}
+                </td>
             );
-        });
+        };
 
         return (
+            // <div style={{ marginTop: "15px",paddingBottom: paddingBottom}}>
+            //     <table className="resource-table">
+            //         <tbody>
+            //             {resourceList}
+            //         </tbody>
+            //     </table>
+            // </div>
             <div style={{ marginTop: "15px",paddingBottom: paddingBottom}}>
-                <table className="resource-table">
-                    <tbody>
-                        {resourceList}
-                    </tbody>
-                </table>
+                {resourceList}
             </div>
         )
     }

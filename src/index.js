@@ -235,6 +235,7 @@ class Scheduler extends Component {
                             <div style={resourceContentStyle} ref={this.schedulerResourceRef} onMouseOver={this.onSchedulerResourceMouseOver} onMouseOut={this.onSchedulerResourceMouseOut} onScroll={this.onSchedulerResourceScroll}>
                                 <ResourceView
                                     {...this.props}
+                                    resourceItem={item}
                                     contentScrollbarHeight={resourcePaddingBottom}
                                 />
                             </div>
@@ -262,7 +263,11 @@ class Scheduler extends Component {
                                         </table>
                                     </div>
                                     <div className="scheduler-bg">
-                                        <table className="scheduler-bg-table" style={{width: schedulerWidth}} ref={this.schedulerContentBgTableRef} >
+                                        <table 
+                                            className="scheduler-bg-table" 
+                                            style={{width: schedulerWidth}} 
+                                            ref={this.schedulerContentBgTableRef} 
+                                        >
                                             <BodyView {...this.props}/>
                                         </table>
                                     </div>
@@ -271,7 +276,7 @@ class Scheduler extends Component {
                         </div>
                     </td>
                 </tr>
-            );
+            )
         };
 
         let popover = <div className="popover-calendar"><Calendar fullscreen={false} onSelect={this.onSelect}/></div>;
@@ -316,14 +321,14 @@ class Scheduler extends Component {
         return (
             <table id="RBS-Scheduler-root" className="scheduler" style={{width: `${width}px`}}>
                 <thead>
-                <tr>
-                    <td colSpan="2">
-                        {schedulerHeader}
-                    </td>
-                </tr>
+                    <tr>
+                        <td colSpan="2">
+                            {schedulerHeader}
+                        </td>
+                    </tr>
                 </thead>
                 <tbody>
-                {tbodyContent}
+                    {tbodyContent}
                 </tbody>
             </table>
         )
