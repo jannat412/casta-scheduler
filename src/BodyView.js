@@ -22,17 +22,22 @@ class BodyView extends Component {
             let rowCells = headers.map((header, index) => {
                 let key = item.slotId + '_' + header.time;
                 let style = index === headers.length - 1 ? {} : {width: cellWidth};
-                if(!!header.nonWorkingTime)
+                let nonClass = ''
+                if(!!header.nonWorkingTime) {
                     style = {...style, backgroundColor: config.nonWorkingTimeBodyBgColor};
+                    nonClass = config.nonWorkingTimeBodyBgClass;
+                }
                 if(item.groupOnly)
                     style = {...style, backgroundColor: config.groupOnlySlotColor};
                 if(!!behaviors.getNonAgendaViewBodyCellBgColorFunc){
                     let cellBgColor = behaviors.getNonAgendaViewBodyCellBgColorFunc(schedulerData, item.slotId, header);
-                    if(!!cellBgColor)
+                    if(!!cellBgColor) {
                         style = {...style, backgroundColor: cellBgColor};
+                        nonClass = config.nonWorkingTimeBodyBgClass;
+                    }
                 }
                 return (
-                    <td key={key} style={style}><div></div></td>
+                    <td key={key} style={style} className={nonClass}><div></div></td>
                 )
             });
 
