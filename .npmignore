@@ -1,0 +1,14 @@
+exampledist/static
+node_modules
+.idea
+.git
+test
+logs
+*.log
+.gitignore
+.npmignore
+.vscode
+
+# Mac OS X
+.DS_Store
+
