@@ -49,8 +49,6 @@ import CellUnits from './CellUnits'
 import SummaryPos from './SummaryPos'
 import SchedulerData from './SchedulerData'
 import DemoData from './DemoData'
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
 
 class Scheduler extends Component {
 
@@ -150,7 +148,7 @@ class Scheduler extends Component {
                         if(specialMoment >= header)
                             index ++;
                     })
-                    this.schedulerContent.scrollLeft = (index - 1) * schedulerData.getContentCellWidth();
+                    this.schedulerContent.scrollLeft = (index - 5) * schedulerData.getContentCellWidth();
 
                     schedulerData.setScrollToSpecialMoment(false);
                 }
@@ -241,7 +239,7 @@ class Scheduler extends Component {
                         </div>
                     </td>
                     <td>
-                        <div className="scheduler-view" style={{width: schedulerContainerWidth+20, verticalAlign: 'top'}}>
+                        <div className="scheduler-view" style={{width: schedulerContainerWidth+20, verticalAlign: 'top', position: 'sticky', top: 0, zIndex: 3, background: "#fff"}}>
                             <div style={{overflow: "hidden", borderBottom: "3px solid #e9e9e9", height: config.tableHeaderHeight}}>
                                 <div style={{overflowX: "scroll", overflowY: "hidden", margin: `0px 0px -${contentScrollbarHeight}px`}} ref={this.schedulerHeadRef} onMouseOver={this.onSchedulerHeadMouseOver} onMouseOut={this.onSchedulerHeadMouseOut} onScroll={this.onSchedulerHeadScroll}>
                                     <div style={{paddingRight: `${contentScrollbarWidth}px`, width: schedulerWidth + contentScrollbarWidth}}>
@@ -314,7 +312,7 @@ class Scheduler extends Component {
         }
 
         return (
-            <table id="RBS-Scheduler-root" className="scheduler" style={{width: `${width}px`}}>
+            <table id="RBS-Scheduler-root" className="scheduler" style={{width: `${width+16}px`}}>
                 <thead>
                 <tr>
                     <td colSpan="2">
