@@ -58,7 +58,7 @@ export default class DnDSource {
                     let start = localeMoment(newStart),
                         end = localeMoment(newEnd);
 
-                    events.forEach((e) =>{
+                    events.map((e) =>{
                         if(schedulerData._getEventSlotId(e) === slotId && (!isEvent || e.id !== item.id)) {
                             let eStart = localeMoment(e.start),
                                 eEnd = localeMoment(e.end);

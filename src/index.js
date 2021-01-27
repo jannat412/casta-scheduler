@@ -143,7 +143,7 @@ class Scheduler extends Component {
                     specialMoment = behaviors.getScrollSpecialMomentFunc(schedulerData, start, end);
                 if(specialMoment>= start && specialMoment <= end){
                     let index = 0;
-                    schedulerData.headers.forEach((item) => {
+                    schedulerData.headers.map((item) => {
                         let header = localeMoment(item.time);
                         if(specialMoment >= header)
                             index ++;

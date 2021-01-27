@@ -43,7 +43,7 @@ class AddMorePopover extends Component {
         let eventList = [];
         let i = 0;
         let DnDEventItem = this.state.dndSource.getDragSource();
-        events.forEach((evt) => {
+        events.map((evt) => {
             if(evt !== undefined) {
                 i++;
                 let eventStart = localeMoment(evt.eventItem.start);

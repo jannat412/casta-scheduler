@@ -76,7 +76,7 @@ export const getEventText = (schedulerData, event) => {
     if(!schedulerData.isEventPerspective) return event.title;
 
     let eventText = event.title;
-    schedulerData.resources.forEach((item) => {
+    schedulerData.resources.map((item) => {
         if(item.id === event.resourceId) {
             eventText = item.name;
         }

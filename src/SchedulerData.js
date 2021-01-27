@@ -97,7 +97,7 @@ export default class SchedulerData {
 
     removeEventGroupById(eventGroupId){
         let index = -1;
-        this.eventGroups.forEach((item, idx) => {
+        this.eventGroups.map((item, idx) => {
             if(item.id === eventGroupId)
                 index = idx;
         })
@@ -107,7 +107,7 @@ export default class SchedulerData {
 
     containsEventGroupId(eventGroupId){
         let index = -1;
-        this.eventGroups.forEach((item, idx) => {
+        this.eventGroups.map((item, idx) => {
             if(item.id === eventGroupId)
                 index = idx;
         })
@@ -239,7 +239,7 @@ export default class SchedulerData {
         let slotIndent = -1;
         let isExpanded = false;
         let expandedMap = new Map();
-        this.renderData.forEach((item) => {
+        this.renderData.map((item) => {
             if(slotEntered === false) {
                 if(item.slotId === slotId && item.hasChildren) {
                     slotEntered = true;
@@ -318,7 +318,7 @@ export default class SchedulerData {
     getSlotById(slotId){
         let slots = this.getSlots();
         let slot = undefined;
-        slots.forEach((item) => {
+        slots.map((item) => {
             if(item.id === slotId)
                 slot = item;
         })
@@ -327,7 +327,7 @@ export default class SchedulerData {
 
     getResourceById(resourceId){
         let resource = undefined;
-        this.resources.forEach((item) => {
+        this.resources.map((item) => {
             if(item.id === resourceId)
                 resource = item;
         })
@@ -340,7 +340,7 @@ export default class SchedulerData {
 
     getSchedulerContentDesiredHeight() {
         let height = 0;
-        this.renderData.forEach((item) => {
+        this.renderData.map((item) => {
             if(item.render)
                 height += item.rowHeight;
         });
@@ -421,7 +421,7 @@ export default class SchedulerData {
 
     removeEventById(eventId) {
         let index = -1;
-        this.events.forEach((item, idx) => {
+        this.events.map((item, idx) => {
             if(item.id === eventId)
                 index = idx;
         })
@@ -474,7 +474,7 @@ export default class SchedulerData {
     _attachEvent(event) {
         let pos = 0;
         let eventStart = this.localeMoment(event.start);
-        this.events.forEach((item, index) => {
+        this.events.map((item, index) => {
             let start = this.localeMoment(item.start);
             if(eventStart >= start)
                 pos = index + 1;
@@ -484,11 +484,11 @@ export default class SchedulerData {
 
     _handleRecurringEvents(){
         let recurringEvents = this.events.filter(x => !!x.rrule);
-        recurringEvents.forEach((item) => {
+        recurringEvents.map((item) => {
             this._detachEvent(item);
         });
 
-        recurringEvents.forEach((item) => {
+        recurringEvents.map((item) => {
             let windowStart = this.localeMoment(this.startDate),
                 windowEnd = this.localeMoment(this.endDate).add(1, 'days'),
                 oldStart = this.localeMoment(item.start),
@@ -514,7 +514,7 @@ export default class SchedulerData {
                     rruleSet.exrule(rrulestr(item.exrule));
                 }
                 if(item.exdates) {
-                    item.exdates.forEach((exdate) =>
+                    item.exdates.map((exdate) =>
                     {
                         rruleSet.exdate(this.localeMoment(exdate).toDate());
                     });
@@ -538,7 +538,7 @@ export default class SchedulerData {
                         : this.localeMoment(time).add(oldEnd.diff(oldStart), 'ms').format(DATETIME_FORMAT)
                 };
             });
-            newEvents.forEach((newEvent) => {
+            newEvents.map((newEvent) => {
                 let eventStart = this.localeMoment(newEvent.start),
                     eventEnd = this.localeMoment(newEvent.end);
                 if(this.isEventInTimeWindow(eventStart, eventEnd, windowStart, windowEnd) && (!oldDtstart || eventStart >= oldDtstart)) {
@@ -686,7 +686,7 @@ export default class SchedulerData {
     _generateEventGroups(){
         let eventGroups = [];
         let set = new Set();
-        this.events.forEach((item) => {
+        this.events.map((item) => {
             let groupId = this._getEventGroupId(item);
             let groupName = this._getEventGroupName(item);
 
@@ -706,7 +706,7 @@ export default class SchedulerData {
         let slots = isEventPerspective ? eventGroups : resources;
         let slotTree = [],
             slotMap = new Map();
-        slots.forEach((slot) => {
+        slots.map((slot) => {
             let headerEvents = headers.map((header) => {
                 return this._createInitHeaderEvents(header);
             });
@@ -809,7 +809,7 @@ export default class SchedulerData {
             throw new Error('Resources should be Array object');
         }
 
-        resources.forEach((item, index) => {
+        resources.map((item, index) => {
             if(item == undefined) {
                 console.error(`Resource undefined: ${index}`);
                 throw new Error(`Resource undefined: ${index}`);
@@ -827,7 +827,7 @@ export default class SchedulerData {
             throw new Error('Event groups should be Array object');
         }
 
-        eventGroups.forEach((item, index) => {
+        eventGroups.map((item, index) => {
             if(item == undefined) {
                 console.error(`Event group undefined: ${index}`);
                 throw new Error(`Event group undefined: ${index}`);
@@ -845,7 +845,7 @@ export default class SchedulerData {
             throw new Error('Events should be Array object');
         }
 
-        events.forEach((e, index) => {
+        events.map((e, index) => {
             if(e == undefined) {
                 console.error(`Event undefined: ${index}`);
                 throw new Error(`Event undefined: ${index}`);
@@ -881,7 +881,7 @@ export default class SchedulerData {
         let cellMaxEventsCount = this.getCellMaxEvents();
         const cellMaxEventsCountValue = 30;
 
-        this.events.forEach((item) => {
+        this.events.map(item =>{
             let resourceEventsList = initRenderData.filter(x => x.slotId === this._getEventSlotId(item));
             if(resourceEventsList.length > 0) {
                 let resourceEvents = resourceEventsList[0];
@@ -889,7 +889,7 @@ export default class SchedulerData {
                 let eventStart = this.localeMoment(item.start), eventEnd = this.localeMoment(item.end);
                 let pos = -1;
 
-                resourceEvents.headerItems.forEach((header, index) => {
+                resourceEvents.headerItems.map((header, index) => {
                     let headerStart = this.localeMoment(header.start), headerEnd = this.localeMoment(header.end);
                     if(headerEnd > eventStart && headerStart < eventEnd) {
                         header.count = header.count + 1;
@@ -920,13 +920,16 @@ export default class SchedulerData {
                     }
                 });
             }
-        });
+        })
+        // this.events.forEach((item) => {
+        //
+        // });
 
         if(cellMaxEventsCount <= cellMaxEventsCountValue || this.behaviors.getSummaryFunc !== undefined) {
-            initRenderData.forEach((resourceEvents) => {
+            initRenderData.map((resourceEvents) => {
                 let hasSummary = false;
 
-                resourceEvents.headerItems.forEach((headerItem) => {
+                resourceEvents.headerItems.map((headerItem) => {
                     if(cellMaxEventsCount <= cellMaxEventsCountValue) {
                         let renderItemsCount = 0, addMoreIndex = 0, index = 0;
                         while (index < cellMaxEventsCount - 1) {
@@ -954,7 +957,7 @@ export default class SchedulerData {
 
                     if(this.behaviors.getSummaryFunc !== undefined){
                         let events = [];
-                        headerItem.events.forEach((e) => {
+                        headerItem.events.map((e) => {
                             if(!!e && !!e.eventItem)
                                 events.push(e.eventItem);
                         });

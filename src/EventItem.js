@@ -144,14 +144,14 @@ class EventItem extends Component {
         document.onselectstart = null;
         document.ondragstart = null;
         const {
-            width, 
-            left, 
-            top, 
-            leftIndex, 
-            rightIndex, 
-            schedulerData, 
-            eventItem, 
-            updateEventStart, 
+            width,
+            left,
+            top,
+            leftIndex,
+            rightIndex,
+            schedulerData,
+            eventItem,
+            updateEventStart,
             conflictOccurred
         } = this.props;
 
@@ -231,7 +231,7 @@ class EventItem extends Component {
             let start = localeMoment(newStart),
                 end = localeMoment(eventItem.end);
 
-            events.forEach((e) => {
+            events.map((e) => {
                 if (schedulerData._getEventSlotId(e) === slotId && e.id !== eventItem.id) {
                     let eStart = localeMoment(e.start),
                         eEnd = localeMoment(e.end);
@@ -435,7 +435,7 @@ class EventItem extends Component {
             let start = localeMoment(eventItem.start),
                 end = localeMoment(newEnd);
 
-            events.forEach((e) => {
+            events.map((e) => {
                 if (schedulerData._getEventSlotId(e) === slotId && e.id !== eventItem.id) {
                     let eStart = localeMoment(e.start),
                         eEnd = localeMoment(e.end);
@@ -485,15 +485,15 @@ class EventItem extends Component {
 
     render() {
         const {
-            eventItem, 
-            isStart, 
-            isEnd, 
-            isInPopover, 
-            eventItemClick, 
-            schedulerData, 
-            isDragging, 
-            connectDragSource, 
-            connectDragPreview, 
+            eventItem,
+            isStart,
+            isEnd,
+            isInPopover,
+            eventItemClick,
+            schedulerData,
+            isDragging,
+            connectDragSource,
+            connectDragPreview,
             eventItemTemplateResolver
         } = this.props;
         const {config, localeMoment} = schedulerData;
@@ -542,18 +542,18 @@ class EventItem extends Component {
             endResizeDiv = <div className="event-resizer event-end-resizer" ref={(ref) => this.endResizer = ref}></div>;
 
         let eventItemTemplate = (
-            <div 
-                className={roundCls + ' event-item'} 
+            <div
+                className={roundCls + ' event-item'}
                 key={eventItem.id}
                 style={{
-                    height: config.eventItemHeight, 
+                    height: config.eventItemHeight,
                     backgroundColor: bgColor
                 }}
             >
-                <span 
+                <span
                     style={{
-                        marginLeft: '10px', 
-                        lineHeight: `${config.eventItemHeight}px` 
+                        marginLeft: '10px',
+                        lineHeight: `${config.eventItemHeight}px`
                     }
                 }>
                     {eventTitle}

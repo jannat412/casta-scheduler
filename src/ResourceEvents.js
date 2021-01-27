@@ -48,7 +48,7 @@ class ResourceEvents extends Component {
                 // this.eventContainer.addEventListener('touchstart', this.initDrag, false);
             } else {
                 this.eventContainer.addEventListener('mousedown', this.initDrag, false);
-            }            
+            }
         }
     }
 
@@ -57,14 +57,14 @@ class ResourceEvents extends Component {
             // this.eventContainer.removeEventListener('touchstart', this.initDrag, false);
         } else {
             this.eventContainer.removeEventListener('mousedown', this.initDrag, false);
-        }        
+        }
         if(np.schedulerData.config.creatable) {
             if(supportTouch) {
                 // this.eventContainer.addEventListener('touchstart', this.initDrag, false);
             } else {
                 this.eventContainer.addEventListener('mousedown', this.initDrag, false);
             }
-        }            
+        }
     }
 
     initDrag = (ev) => {
@@ -73,7 +73,7 @@ class ResourceEvents extends Component {
         if((ev.srcElement || ev.target) !== this.eventContainer) return;
 
         ev.stopPropagation();
-        
+
         const {resourceEvents} = this.props;
         if(resourceEvents.groupOnly) return;
         let clientX = 0;
@@ -191,7 +191,7 @@ class ResourceEvents extends Component {
             let start = localeMoment(startTime),
                 end = localeMoment(endTime);
 
-            events.forEach((e) =>{
+            events.map((e) =>{
                 if(schedulerData._getEventSlotId(e) === slotId) {
                     let eStart = localeMoment(e.start),
                         eEnd = localeMoment(e.end);
@@ -256,7 +256,7 @@ class ResourceEvents extends Component {
         let selectedArea = isSelecting ? <SelectedArea {...this.props} left={left} width={width} /> : <div />;
 
         let eventList = [];
-        resourceEvents.headerItems.forEach((headerItem, index) => {
+        resourceEvents.headerItems.map((headerItem, index) => {
 
             if (headerItem.count > 0 || headerItem.summary != undefined) {
 
@@ -264,7 +264,7 @@ class ResourceEvents extends Component {
                 let marginTop = resourceEvents.hasSummary && isTop ? 1 + config.eventItemLineHeight : 1;
                 let renderEventsMaxIndex = headerItem.addMore === 0 ? cellMaxEvents : headerItem.addMoreIndex;
 
-                headerItem.events.forEach((evt, idx) => {
+                headerItem.events.map((evt, idx) => {
                     if(idx < renderEventsMaxIndex && evt !== undefined && evt.render) {
                         let durationStart = localeMoment(startDate);
                         let durationEnd = localeMoment(endDate).add(1, 'days');

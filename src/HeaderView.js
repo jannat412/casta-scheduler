@@ -24,7 +24,7 @@ class HeaderView extends Component {
         let pFormattedList = [];
         let style = {};
         if(cellUnit === CellUnits.Hour){
-            headers.forEach((item, index) => {
+            headers.map((item, index) => {
                 if(index % minuteStepsInHour === 0){
                     let datetime = localeMoment(item.time);
                     const isCurrentTime = datetime.isSame(new Date(), 'hour');

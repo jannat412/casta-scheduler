@@ -7,7 +7,7 @@ import {ViewTypes} from './ViewTypes'
 export default class DnDContext {
     constructor(sources, DecoratedComponent) {
         this.sourceMap = new Map();
-        sources.forEach((item) => {
+        sources.map((item) => {
             this.sourceMap.set(item.dndType, item);
         })
         this.DecoratedComponent = DecoratedComponent;
