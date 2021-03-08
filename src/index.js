@@ -424,7 +424,7 @@ class Scheduler extends Component {
         this.currentArea = -1;
     }
 
-    onSchedulerContentScroll = (proxy, event) => {
+    onSchedulerContentScroll = (proxy, event, scrollUpdate) => {
         if(this.currentArea === 0 || this.currentArea === -1) {
             if (this.schedulerHead.scrollLeft != this.schedulerContent.scrollLeft)
                 this.schedulerHead.scrollLeft = this.schedulerContent.scrollLeft;
@@ -432,35 +432,70 @@ class Scheduler extends Component {
                 this.schedulerResource.scrollTop = this.schedulerContent.scrollTop;
         }
 
-        const {schedulerData, onScrollLeft, onScrollRight, onScrollTop, onScrollBottom } = this.props;
-        const {scrollLeft, scrollTop} = this.state;
-        if(this.schedulerContent.scrollLeft !== scrollLeft) {
-            if(this.schedulerContent.scrollLeft === 0 && onScrollLeft != undefined) {
-                onScrollLeft(schedulerData, this.schedulerContent, this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth);
-            }
-            if(this.schedulerContent.scrollLeft === this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth && onScrollRight != undefined) {
-                onScrollRight(schedulerData, this.schedulerContent, this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth);
-            }
-        } else if(this.schedulerContent.scrollTop !== scrollTop) {
-            if(this.schedulerContent.scrollTop === 0 && onScrollTop != undefined) {
-                onScrollTop(schedulerData, this.schedulerContent, this.schedulerContent.scrollHeight - this.schedulerContent.clientHeight);
-            }
-            if(this.schedulerContent.scrollTop === this.schedulerContent.scrollHeight - this.schedulerContent.clientHeight && onScrollBottom != undefined) {
-                onScrollBottom(schedulerData, this.schedulerContent, this.schedulerContent.scrollHeight - this.schedulerContent.clientHeight);
-            }
+        const {
+            schedulerData,
+            onScrollLeft,
+            onScrollRight,
+            // onScrollTop,
+            // onScrollBottom
+        } = this.props;
+        //const { scrollLeft, scrollTop } = this.state;
+
+        if(this.schedulerContent.scrollLeft === 0 && onScrollLeft != undefined) {
+            onScrollLeft(
+              schedulerData,
+              this.schedulerContent,
+              this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth
+            );
         }
+        if(this.schedulerContent.scrollLeft === this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth && onScrollRight != undefined) {
+            onScrollRight(
+              schedulerData,
+              this.schedulerContent,
+              this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth
+            );
+        }
+
+        // if(this.schedulerContent.scrollLeft !== scrollLeft) {
+        //   if(this.schedulerContent.scrollLeft === 0 && onScrollLeft != undefined) {
+        //     onScrollLeft(
+        //       schedulerData,
+        //       this.schedulerContent,
+        //       this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth
+        //     );
+        //   }
+        //   if(this.schedulerContent.scrollLeft === this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth && onScrollRight != undefined) {
+        //     onScrollRight(
+        //       schedulerData,
+        //       this.schedulerContent,
+        //       this.schedulerContent.scrollWidth - this.schedulerContent.clientWidth
+        //     );
+        //   }
+        // } else if(this.schedulerContent.scrollTop !== scrollTop) {
+        //   if(this.schedulerContent.scrollTop === 0 && onScrollTop != undefined) {
+        //     onScrollTop(
+        //       schedulerData,
+        //       this.schedulerContent,
+        //       this.schedulerContent.scrollHeight - this.schedulerContent.clientHeight
+        //     );
+        //   }
+        //   if(this.schedulerContent.scrollTop === this.schedulerContent.scrollHeight - this.schedulerContent.clientHeight && onScrollBottom != undefined) {
+        //     onScrollBottom(
+        //       schedulerData,
+        //       this.schedulerContent,
+        //       this.schedulerContent.scrollHeight - this.schedulerContent.clientHeight
+        //     );
+        //   }
+        // }
 
         if(this.schedulerContent.scrollLeft !== 0) {
             stack.push(this.schedulerContent.scrollLeft)
         } else {
             let popLeft = stack.pop()
-
             this.setState({
                 scrollLeft: popLeft,
-                scrollTop: this.schedulerContent.scrollTop
+                // scrollTop: this.schedulerContent.scrollTop
             });
-
-            stack = []
         }
     }
 
