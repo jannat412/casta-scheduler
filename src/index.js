@@ -50,6 +50,8 @@ import SummaryPos from './SummaryPos'
 import SchedulerData from './SchedulerData'
 import DemoData from './DemoData'
 
+let stack = []
+
 class Scheduler extends Component {
 
     constructor(props) {
@@ -447,10 +449,19 @@ class Scheduler extends Component {
                 onScrollBottom(schedulerData, this.schedulerContent, this.schedulerContent.scrollHeight - this.schedulerContent.clientHeight);
             }
         }
-        this.setState({
-            scrollLeft: this.schedulerContent.scrollLeft,
-            scrollTop: this.schedulerContent.scrollTop
-        });
+
+        if(this.schedulerContent.scrollLeft !== 0) {
+            stack.push(this.schedulerContent.scrollLeft)
+        } else {
+            let popLeft = stack.pop()
+
+            this.setState({
+                scrollLeft: popLeft,
+                scrollTop: this.schedulerContent.scrollTop
+            });
+
+            stack = []
+        }
     }
 
     onViewChange = (e) => {
