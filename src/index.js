@@ -494,7 +494,7 @@ class Scheduler extends Component {
             let popLeft = stack.pop()
             this.setState({
                 scrollLeft: popLeft,
-                // scrollTop: this.schedulerContent.scrollTop
+                scrollTop: this.schedulerContent.scrollTop
             });
         }
     }
