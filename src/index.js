@@ -201,8 +201,30 @@ class Scheduler extends Component {
                 contentHeight = this.state.contentHeight;
             let resourcePaddingBottom = resourceScrollbarHeight === 0 ? contentScrollbarHeight : 0;
             let contentPaddingBottom = contentScrollbarHeight === 0 ? resourceScrollbarHeight : 0;
-            let schedulerContentStyle = {overflow: 'auto', margin: "0px", position: "relative", paddingBottom: contentPaddingBottom};
-            let resourceContentStyle = {overflowX: "hidden", overflowY: "hidden", width: resourceTableWidth + resourceScrollbarWidth - 2, margin: `0px -${contentScrollbarWidth}px 0px 0px`};
+            let schedulerContentStyle = {
+              overflow: 'auto',
+              margin: "0px",
+              position: "relative",
+              paddingBottom: contentPaddingBottom
+            };
+            let resourceContentStyle = {
+              overflowX: "hidden",
+              overflowY: "scroll",
+              width: resourceTableWidth + resourceScrollbarWidth - 2,
+              margin: `0px -${contentScrollbarWidth}px 0px 0px`,
+              "&::-webkit-scrollbar": {
+                display: 'none'
+              },
+              "&::-webkit-scrollbar-track": {
+                display: 'none'
+              },
+              "&::-webkit-scrollbar-thumb": {
+                display: 'none'
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                display: 'none'
+              }
+            };
             if (config.schedulerMaxHeight > 0) {
                 schedulerContentStyle = {
                     ...schedulerContentStyle,
@@ -283,9 +305,21 @@ class Scheduler extends Component {
                             >
                                 <div
                                   style={{
-                                      overflowX: "hidden",
-                                      overflowY: "hidden",
-                                      margin: `0px 0px -${contentScrollbarHeight}px`
+                                    overflowX: "scroll",
+                                    overflowY: "hidden",
+                                    margin: `0px 0px -${contentScrollbarHeight}px`,
+                                    "&::-webkit-scrollbar": {
+                                      display: 'none'
+                                    },
+                                    "&::-webkit-scrollbar-track": {
+                                      display: 'none'
+                                    },
+                                    "&::-webkit-scrollbar-thumb": {
+                                      display: 'none'
+                                    },
+                                    "&::-webkit-scrollbar-thumb:hover": {
+                                      display: 'none'
+                                    }
                                   }}
                                   ref={this.schedulerHeadRef}
                                   onMouseOver={this.onSchedulerHeadMouseOver}
